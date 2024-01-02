@@ -16,4 +16,10 @@
   color: teal;
   font-family: 'Pacifico', cursive;
   font-size: 50px;
+  text-align: center;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  border-style: solid;
+  border-width: 0.5rem;
 }
