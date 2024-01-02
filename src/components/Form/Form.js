@@ -2,7 +2,7 @@ import React from 'react'
 import './Form.css'
 import {useState} from 'react'
 
-const Form = () => {
+const Form = ({reservations, setReservations}) => {
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
@@ -10,7 +10,19 @@ const Form = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("submitted")
+    const newReservation = {
+      id: Date.now(),
+      name,
+      date,
+      time,
+      number
+    }
+    setReservations([...reservations, newReservation]); // using the spread operator to add the new reservation to the existing reservations array
+
+    setName('');
+    setDate('');
+    setTime('');
+    setNumber('');
   }
 
   return (
@@ -34,7 +46,7 @@ const Form = () => {
         className="input-field"
         required
         autoComplete='off'
-        onChange={e => setName(e.target.value)}
+        onChange={e => setDate(e.target.value)}
         />
         <input
         type="text"
@@ -44,7 +56,7 @@ const Form = () => {
         className="input-field"
         required
         autoComplete='off'
-        onChange={e => setName(e.target.value)}
+        onChange={e => setTime(e.target.value)}
         />
         <input
         type="number"
@@ -54,9 +66,9 @@ const Form = () => {
         className="input-field"
         required
         autoComplete='off'
-        onChange={e => setName(e.target.value)}
+        onChange={e => setNumber(e.target.value)}
         />
-        <button className='submit-button'>
+        <button className='submit-button'> 
           Make Reservation
         </button> 
       </form>

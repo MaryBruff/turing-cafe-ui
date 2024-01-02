@@ -18,7 +18,7 @@ function App() {
   const currentReservations = reservations.map(reservation => {
     return (
       <Card 
-        key={reservation.id} // key is required in map
+        key={reservation.id} // don't forget key is required in map
         id={reservation.id}
         name={reservation.name}
         date={reservation.date}
@@ -32,7 +32,10 @@ function App() {
     <div className="App">
       <h1 className='app-title'>Turing Cafe Reservations</h1>
       <div className='resy-form'>
-        <Form />
+        <Form
+        reservations={reservations}
+        setReservations={setReservations}
+        />
       </div>
       <div className='resy-container'>
         {currentReservations}
