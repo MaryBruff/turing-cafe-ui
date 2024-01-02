@@ -1,5 +1,43 @@
-describe('empty spec', () => {
-  it('passes', () => {
-    cy.visit('https://example.cypress.io')
+describe('Reservations Spec', () => {
+  beforeEach(() => {
+    cy.intercept( 'GET','http://localhost:3001/api/v1/reservations', {
+    fixture: 'reservations.json',
+    }).as('getReservations')
   })
-})
+
+  it('Should display the title of the page when user first visits', () => {
+    cy.visit('http://localhost:3000/');
+    cy.wait('@getReservations')
+    cy.get('.app-title').contains('Turing Cafe Reservations')
+  });
+
+  it('Should display the form when the user first visits', () => {
+    cy.visit('http://localhost:3000/');
+    cy.wait('@getReservations')
+    cy.get('.resy-form').should('be.visible')
+
+    cy.get('.resy-form .input-field[name="name"]').should('exist').and('have.attr', 'placeholder', 'Name')
+    cy.get('.resy-form .input-field[name="date"]').should('exist').and('have.attr', 'placeholder', 'Date')
+    cy.get('.resy-form .input-field[name="time"]').should('exist').and('have.attr', 'placeholder', 'Time')
+    cy.get('.resy-form .input-field[name="number"]').should('exist').and('have.attr', 'placeholder', 'Number of Guests')
+    cy.get('.resy-form button').should('exist').and('have.text', 'Make Reservation')
+  });
+
+  it('Should display current reservations cards when the user first visits', () => {
+    cy.visit('http://localhost:3000/');
+    cy.wait('@getReservations')
+
+    cy.fixture('reservations.json').then((reservations) => {
+      reservations.forEach((reservation, index) => {
+        cy.get('.resy-container .card').eq(index).as('currentCard')
+        cy.get('@currentCard').find('.card-title').should('contain', reservation.name)
+        cy.get('@currentCard').find('.card-detail p').eq(0).should('contain', reservation.date)
+        cy.get('@currentCard').find('.card-detail p').eq(1).should('contain', reservation.time)
+        cy.get('@currentCard').find('.card-detail p').eq(2).should('contain', `Number of Guests: ${reservation.number}`)
+
+        cy.get('@currentCard').find('.button').should('contain', 'Cancel')
+      })
+    })
+  }) 
+
+});
