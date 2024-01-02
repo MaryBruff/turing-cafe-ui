@@ -3,12 +3,15 @@
 }
 
 .input-field {
+    font-size: 1rem;
     padding: 10px;
     margin: 10px;
     border-radius: 4px;
 }
 
 .submit-button {
+    font-size: 1rem;
+    font-weight: bolder;
     background-color: teal;
     color: white;
     padding: 12px 20px;
