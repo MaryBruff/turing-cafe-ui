@@ -49,6 +49,15 @@ describe('Reservations Spec', () => {
     cy.get('.resy-form .input-field[name="number"]').type('2').should('have.value', '2')
   })
 
+  it('Should add a new reservation when the user clicks the make reservation button', () => {
+    cy.visit('http://localhost:3000/');
+    cy.wait('@getReservations')
+    cy.get('.resy-form .input-field[name="name"]').type('Atticus')
+    cy.get('.resy-form .input-field[name="date"]').type('01/5/24')
+    cy.get('.resy-form .input-field[name="time"]').type('10:00')
+    cy.get('.resy-form .input-field[name="number"]').type('2')
+    cy.get('.resy-form button').click()
 
-
+    cy.get('.resy-container .card').should('have.length', 10)
+  })
 });
