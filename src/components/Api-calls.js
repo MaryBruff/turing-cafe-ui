@@ -1,8 +1,7 @@
 export default async function getReservations() {
     return await fetch('http://localhost:3001/api/v1/reservations')
         .then(response => response.json())
-        .then(data => data)
-        return data
+        .then(data => {return data})
         .catch(error => console.log(error))
 }  
 
