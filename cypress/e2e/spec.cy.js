@@ -40,4 +40,15 @@ describe('Reservations Spec', () => {
     })
   }) 
 
+  it('Should update form component state when input fields are changed', () => {
+    cy.visit('http://localhost:3000/');
+    cy.wait('@getReservations')
+    cy.get('.resy-form .input-field[name="name"]').type('Atticus').should('have.value', 'Atticus')
+    cy.get('.resy-form .input-field[name="date"]').type('01/5/24').should('have.value', '01/5/24')
+    cy.get('.resy-form .input-field[name="time"]').type('10:00').should('have.value', '10:00')
+    cy.get('.resy-form .input-field[name="number"]').type('2').should('have.value', '2')
+  })
+
+
+
 });
